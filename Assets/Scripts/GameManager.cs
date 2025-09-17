@@ -1,14 +1,17 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public static bool isRestart = false;
     private bool isPaused = false;
+    public static bool resetGameObjects = false;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject mainMenu;
@@ -27,9 +30,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource SFXaudioSource;
     [SerializeField] private AudioClip backgroundMusic;
     [SerializeField] private AudioClip gameOverMusic;
     [SerializeField] private AudioClip menuMusic;
+
+    [SerializeField] private List<Slider> musicSlider;
+    [SerializeField] private List<Slider> sfxSlider;
 
     void Awake()
     {
@@ -52,6 +59,61 @@ public class GameManager : MonoBehaviour
         }
 
         ShowHighScore();
+
+
+        float musicVol = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        float sfxVol = PlayerPrefs.GetFloat("SfxVolume", 1f);
+
+        audioSource.volume = musicVol;
+        SFXaudioSource.volume = sfxVol;
+
+        foreach (var slider in musicSlider)
+        {
+            if (slider != null)
+            {
+                slider.value = musicVol;
+                slider.onValueChanged.AddListener(SetMusicVolume);
+            }
+        }
+
+        foreach (var slider in sfxSlider)
+        {
+            if (slider != null)
+            {
+                slider.value = sfxVol;
+                slider.onValueChanged.AddListener(SetSfxVolume);
+            }
+        }
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        audioSource.volume = value;
+        PlayerPrefs.SetFloat("MusicVolume", value);
+        PlayerPrefs.Save();
+
+        foreach (var slider in musicSlider)
+            if (slider != null && slider.value != value)
+                slider.value = value;
+    }
+
+    public void SetSfxVolume(float value)
+    {
+        SFXaudioSource.volume = value;
+        PlayerPrefs.SetFloat("SfxVolume", value);
+        PlayerPrefs.Save();
+
+        foreach (var slider in sfxSlider)
+            if (slider != null && slider.value != value)
+                slider.value = value;
+    }
+
+    public void SyncSliders()
+    {
+        float musicVol = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        float sfxVol = PlayerPrefs.GetFloat("SfxVolume", 1f);
+
+
     }
 
     private void ShowMainMenu()
@@ -61,6 +123,7 @@ public class GameManager : MonoBehaviour
         gameOverScreen.SetActive(false);
         Time.timeScale = 0f;
         PlayMusic(menuMusic, true);
+        resetGameObjects=true;
     }
 
     private void StartGame()
@@ -71,6 +134,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         currentTime = 0f;
         PlayMusic(backgroundMusic, true);
+        resetGameObjects=false;
     }
 
     public void PlayGame()
@@ -166,7 +230,7 @@ public class GameManager : MonoBehaviour
         gamePanel.SetActive(false);
         pausePanel.SetActive(true);
         controlsPanel.SetActive(false);
-        
+
 
         Time.timeScale = 0f;
         isPaused = true;
@@ -183,6 +247,12 @@ public class GameManager : MonoBehaviour
         isPaused = false;
     }
 
+    public void GameOverPanel() {
+        Debug.Log("GameOverPanel called");
+        gamePanel.SetActive(false);
+        gameOverScreen.SetActive(true);
+    }
+
     private void PlayMusic(AudioClip clip, bool loop)
     {
         if (audioSource != null && clip != null)
@@ -193,6 +263,8 @@ public class GameManager : MonoBehaviour
             audioSource.Play();
         }
     }
+
+
 
     private void Update()
     {
@@ -209,20 +281,26 @@ public class GameManager : MonoBehaviour
 
 
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
                 ResumeGame();
             else
                 PauseGame();
         }
-
     }
 
     public float GetScore()
     {
         return currentTime;
     }
+    // Add this method to fix CS0103: The name 'RestartGameObjects' does not exist in the current context
 
-    
+    private void RestartGameObjects()
+    {
+        // Implement logic to reset or restart game objects as needed.
+        // If you have specific objects to reset, add that logic here.
+        // For now, this is a placeholder to resolve the error.
+    }
+
 }

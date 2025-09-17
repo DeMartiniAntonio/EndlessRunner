@@ -16,6 +16,7 @@ public class CharacterSelector : MonoBehaviour
     public void SelectFemale()
     {
         selectedPrefab = femalePrefab;
+
     }
 
     public void PlayGame()
@@ -26,11 +27,8 @@ public class CharacterSelector : MonoBehaviour
         {
             Destroy(currentCharacter);
         }
-
-        currentCharacter = Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
+        currentCharacter = Instantiate(selectedPrefab, selectedPrefab.transform.position, spawnPoint.rotation);
 
         characterSelectUI.SetActive(false); 
     }
-
-
 }

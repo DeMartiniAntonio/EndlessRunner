@@ -10,7 +10,7 @@ public class IncomingObjectMovement : MonoBehaviour
     private void Start()
     {
         incomingObjectRB = gameObject.GetComponent<Rigidbody>();
-        incomingObjectRB.linearVelocity = transform.up * -speed;
+        incomingObjectRB.linearVelocity = transform.forward * -speed;
         StartCoroutine(DestroyObjectAfterTime(12f));
     }
 

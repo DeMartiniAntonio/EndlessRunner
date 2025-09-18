@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CharacterPickRotation : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 30f;
+    [SerializeField] private float rotationSpeed = 0.35f;
 
     void Update()
     {

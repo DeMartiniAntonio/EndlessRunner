@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        float savedHighScore = PlayerPrefs.GetFloat("HighScore", 0f);
+        float savedHighScore = PlayerPrefs.GetFloat("HighScore", 62.32451f);
 
         if (currentTime < savedHighScore)
         {

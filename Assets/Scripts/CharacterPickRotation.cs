@@ -6,6 +6,6 @@ public class CharacterPickRotation : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(0, rotationSpeed, 0);
+        transform.Rotate(0, rotationSpeed/2, 0);
     }
 }

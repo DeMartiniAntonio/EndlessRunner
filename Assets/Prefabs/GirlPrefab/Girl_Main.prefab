@@ -220,4 +220,4 @@ MonoBehaviour:
   speed: 10
   playerRigidBody: {fileID: 1629724160048707695}
   transitionTime: 0.5
-  jumpForce: {x: 0, y: 10, z: 0}
+  jumpForce: {x: 0, y: 20, z: 0}

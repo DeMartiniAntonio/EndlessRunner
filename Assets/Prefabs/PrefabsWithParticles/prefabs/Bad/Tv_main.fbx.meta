@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: f5fd6611c103ab54ca3f8e74df12b6d5
+guid: 52395c8a49d773c4a82df0edfa9c1254
 ModelImporter:
-  serializedVersion: 24200
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -13,22 +13,22 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tv_Base_color
-    second: {fileID: 2800000, guid: 760940c56eb345242aaeb1a8c775c37e, type: 3}
+    second: {fileID: 2800000, guid: ea0d966224858564599bf858d78782f2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tv_Metallic
-    second: {fileID: 2800000, guid: e49f6b6566b7f3a4db92b9e8b23fad71, type: 3}
+    second: {fileID: 2800000, guid: f7bdc00a6b6b09f4182c8dfaefa7af8d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tv_Normal
-    second: {fileID: 2800000, guid: a83c8bbc94db72a4d9c9d09047b10371, type: 3}
+    second: {fileID: 2800000, guid: 135da746593aace48a5a718008e2ef40, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tv_Roughness
-    second: {fileID: 2800000, guid: 7b80dd145a6a5274b93c09f11c5d9ffb, type: 3}
+    second: {fileID: 2800000, guid: 62658c1ce93776e4787fc6646363ec62, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -81,9 +81,6 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
-    generateMeshLods: 0
-    meshLodGenerationFlags: 0
-    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

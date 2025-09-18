@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static bool isRestart = false;
     private bool isPaused = false;
-    public static bool resetGameObjects = false;
+    //public static bool resetGameObjects = false;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject mainMenu;
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         gameOverScreen.SetActive(false);
         Time.timeScale = 0f;
         PlayMusic(menuMusic, true);
-        resetGameObjects=true;
+        //resetGameObjects=true;
     }
 
     private void StartGame()
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         currentTime = 0f;
         PlayMusic(backgroundMusic, true);
-        resetGameObjects=false;
+       //resetGameObjects=false;
     }
 
     public void PlayGame()
@@ -145,14 +145,14 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         isRestart = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GameOver()
     {
         float savedHighScore = PlayerPrefs.GetFloat("HighScore", 0f);
 
-        if (currentTime > savedHighScore)
+        if (currentTime < savedHighScore)
         {
             PlayerPrefs.SetFloat("HighScore", currentTime);
             PlayerPrefs.Save();
@@ -172,9 +172,8 @@ public class GameManager : MonoBehaviour
         int minute = Mathf.FloorToInt(highScore / 60);
         int sekunde = Mathf.FloorToInt(highScore % 60);
         int stotinke = Mathf.FloorToInt((highScore - Mathf.Floor(highScore)) * 100);
-
         if (highScoreText != null)
-            highScoreText.text = "HIGHSCORE: " + minute.ToString("00") + ":" + sekunde.ToString("00") + ":" + stotinke.ToString("00");
+            highScoreText.text = "Rezultat: " + minute.ToString("00") + ":" + sekunde.ToString("00") + ":" + stotinke.ToString("00");
     }
 
     public void ExitGame()
@@ -220,7 +219,7 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(false);
         controlsPanel.SetActive(false);
         optionsPanel2.SetActive(false);
-
+        gameOverScreen.SetActive(false);
     }
 
     public void PauseGame()
@@ -248,7 +247,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOverPanel() {
-        Debug.Log("GameOverPanel called");
         gamePanel.SetActive(false);
         gameOverScreen.SetActive(true);
     }
@@ -271,7 +269,6 @@ public class GameManager : MonoBehaviour
         if (Time.timeScale == 0f) return;
 
         currentTime += Time.deltaTime;
-
         int minute = Mathf.FloorToInt(currentTime / 60);
         int sekunde = Mathf.FloorToInt(currentTime % 60);
         int stotinke = Mathf.FloorToInt((currentTime - Mathf.Floor(currentTime)) * 100);
@@ -288,6 +285,10 @@ public class GameManager : MonoBehaviour
             else
                 PauseGame();
         }
+    }
+
+    public void UpdateScore(float score) {
+        currentTime += score;
     }
 
     public float GetScore()

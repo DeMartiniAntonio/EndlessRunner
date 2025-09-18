@@ -25,27 +25,44 @@ public class GameplayManager : MonoBehaviour
     private bool isEndScreenActive = false;
 
     private Vector3 roadStartingPlace;
+    private bool isCoroutineStarted= false;
     
     private void Start()
     {
         roadStartingPlace = road.transform.position;
         score = 0;
         timeElapsed = 0f;
-
+        Debug.Log("uso");
         isEndScreenActive = false;
-        StartCoroutine(SpowningObjects());
+        //StartCoroutine(SpowningObjects());
+    }
+
+    public void StartSpowningObjectCorutine() {
+        
+        if (!isCoroutineStarted) {
+            StartCoroutine(SpowningObjects());
+        }
+        isCoroutineStarted = true;
     }
 
     public void RestartGameObjects() {
         score = 0;
         timeElapsed = 0f;
         isEndScreenActive = false;
+        isCoroutineStarted = false;
+        StopAllCoroutines();
         road.transform.position = roadStartingPlace;
         //get all generated objects with script IncomingObjectMovement and destroy them
-        IncomingObjectMovement[] incomingObjects = FindObjectsOfType<IncomingObjectMovement>();
+        IncomingObjectMovement[] incomingObjects = FindObjectsOfType<IncomingObjectMovement>();    
+        SofaIncoming[] incomingUndestoyables = FindObjectsOfType<SofaIncoming>();
         foreach (IncomingObjectMovement obj in incomingObjects)
         {
             Destroy(obj.gameObject);
+        }
+
+        foreach (SofaIncoming obj2 in incomingUndestoyables)
+        {
+            Destroy(obj2.gameObject);
         }
 
     }
@@ -53,26 +70,33 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.R)) {
+            timeElapsed = 60;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            Debug.Log(Time.timeScale);
+        }
         timeElapsed += Time.deltaTime;
         if (timeElapsed >= 62 && isEndScreenActive == false)
         {
-            Debug.Log("Time's up! Game Over!");
+            
             GameManager.instance.GameOverPanel();
+            GameManager.instance.GameOver();
             isEndScreenActive=true;
         }
     }
 
     private IEnumerator SpowningObjects()
     {
+        yield return new WaitForSeconds(waveSpownerTimer);
         randomNumberOfObjectsToSpown = Random.Range(1, 4); // Random number of objects to spawn (1 to 3)
         SetLinesToSpownObjects(randomNumberOfObjectsToSpown);
-        yield return new WaitForSeconds(waveSpownerTimer);
+        
         if (timeElapsed < 50)
         {
             StartCoroutine(SpowningObjects());
-
         }
-        
     }
 
     private void SetLinesToSpownObjects(int numberOfObjectsToSpown)
@@ -85,15 +109,13 @@ public class GameplayManager : MonoBehaviour
 
             if (randomChanceTOSpownCollectableOnTopOfObject == 0)
             {
-                Debug.Log("Spowning collectable on top of object");
                 randomBadObjectToSpown = Random.Range(0, badObjectsToSpawn.Length);
                 randomCollectableSpown = Random.Range(0, collectables.Length);
                 Instantiate(badObjectsToSpawn[randomBadObjectToSpown], new Vector3(randomSpownLineIndex * 3, badObjectsToSpawn[randomBadObjectToSpown].transform.position.y, 5), badObjectsToSpawn[randomBadObjectToSpown].transform.rotation);
-                Instantiate(collectables[randomCollectableSpown], new Vector3(randomSpownLineIndex * 3, collectables[randomCollectableSpown].transform.position.y * 4, 5), collectables[randomCollectableSpown].transform.rotation);
+                Instantiate(collectables[randomCollectableSpown], new Vector3(randomSpownLineIndex * 3, collectables[randomCollectableSpown].transform.position.y * 3, 5), collectables[randomCollectableSpown].transform.rotation);
             }
             else if (randomChanceTOSpownCollectableOnTopOfObject >= 1)
             {
-                Debug.Log("Spowning only one object");
                 randomObjectListToPool = Random.Range(0, 2);
                 if (randomObjectListToPool == 0) // bad object
                 {
@@ -128,12 +150,12 @@ public class GameplayManager : MonoBehaviour
                     if (firstSecondObject == 0)
                     {
                         Instantiate(badObjectsToSpawn[randomBadObjectToSpown], new Vector3(randomSpownLineIndex * 3, badObjectsToSpawn[randomBadObjectToSpown].transform.position.y, 5), badObjectsToSpawn[randomBadObjectToSpown].transform.rotation);
-                        Instantiate(collectables[randomCollectableSpown], new Vector3(randomSpownLineIndex * 3, collectables[randomCollectableSpown].transform.position.y * 4, 5), collectables[randomCollectableSpown].transform.rotation);
+                        Instantiate(collectables[randomCollectableSpown], new Vector3(randomSpownLineIndex * 3, collectables[randomCollectableSpown].transform.position.y * 3, 5), collectables[randomCollectableSpown].transform.rotation);
                     }
                     else
                     {
                         Instantiate(badObjectsToSpawn[randomBadObjectToSpown], new Vector3(randomSecondSpownLineIndex * 3, badObjectsToSpawn[randomBadObjectToSpown].transform.position.y, 5), badObjectsToSpawn[randomBadObjectToSpown].transform.rotation);
-                        Instantiate(collectables[randomCollectableSpown], new Vector3(randomSecondSpownLineIndex * 3, collectables[randomCollectableSpown].transform.position.y * 4, 5), collectables[randomCollectableSpown].transform.rotation);
+                        Instantiate(collectables[randomCollectableSpown], new Vector3(randomSecondSpownLineIndex * 3, collectables[randomCollectableSpown].transform.position.y * 3, 5), collectables[randomCollectableSpown].transform.rotation);
                     }
                 }
                 else if (randomChanceTOSpownCollectableOnTopOfObject >= 1)
@@ -181,7 +203,7 @@ public class GameplayManager : MonoBehaviour
                     randomBadObjectToSpown = Random.Range(0, badObjectsToSpawn.Length);
                     randomCollectableSpown = Random.Range(0, collectables.Length);
                     Instantiate(badObjectsToSpawn[randomBadObjectToSpown], new Vector3(i * 3, badObjectsToSpawn[randomBadObjectToSpown].transform.position.y, 5), badObjectsToSpawn[randomBadObjectToSpown].transform.rotation);
-                    Instantiate(collectables[randomCollectableSpown], new Vector3(i * 3, collectables[randomCollectableSpown].transform.position.y * 4, 5), collectables[randomCollectableSpown].transform.rotation);
+                    Instantiate(collectables[randomCollectableSpown], new Vector3(i * 3, collectables[randomCollectableSpown].transform.position.y * 3, 5), collectables[randomCollectableSpown].transform.rotation);
                 }
                 else if (randomChanceTOSpownCollectableOnTopOfObject >= 1)
                 {

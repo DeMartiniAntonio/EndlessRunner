@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: fe901ef139f8e6d4790b3fc761938cfe
+guid: 8fceca30cb3f79d4588820719f8576d3
 ModelImporter:
-  serializedVersion: 24200
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -13,22 +13,22 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Sofa_twoseat_Base_color
-    second: {fileID: 2800000, guid: ed9c69ca090092e44aed3a8a55fe7015, type: 3}
+    second: {fileID: 2800000, guid: 7f134dc075d8b384191811b653d63470, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Sofa_twoseat_Metallic
-    second: {fileID: 2800000, guid: d88276a6b6e3fed468e2a8dd4220caae, type: 3}
+    second: {fileID: 2800000, guid: e9330892de7751e45b3439fd0a69d83d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Sofa_twoseat_Normal
-    second: {fileID: 2800000, guid: 6dce10d312be4a5428af435e45b6b015, type: 3}
+    second: {fileID: 2800000, guid: 6cbebf74ea3e7664aa5a47803266a6c6, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Sofa_twoseat_Roughness
-    second: {fileID: 2800000, guid: e45113edc6213314091e30d66d964ac8, type: 3}
+    second: {fileID: 2800000, guid: 6e0d6f510748b684cb7664c85fe1c651, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -81,9 +81,6 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
-    generateMeshLods: 0
-    meshLodGenerationFlags: 0
-    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isRight;
     private bool isGrounded;
 
-    private float jumpforce = 5;
+    private float jumpforce = 7;
     [SerializeField] private Vector3 jumpForce = new Vector3(0, 10, 0);
 
     private Animator animator;                          // Animator komponenta, obavezna za animacije
